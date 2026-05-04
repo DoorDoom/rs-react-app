@@ -15,18 +15,20 @@ class App extends Component {
   fetchData = async (search: string) => {
     try {
       const url = 'https://pokeapi.co/api/v2/pokemon/' + search;
-      const res = await fetch(url);
-      const json = await res.json();
-      const results = json.results || json.forms;
+      if (url !== this.state.serverUrl) {
+        const res = await fetch(url);
+        const json = await res.json();
+        const results = json.results || json.forms;
 
-      if (!results) throw new Error('fetch failed');
-      this.data.splice(0, this.data.length);
-      results.map((elem: ResultResponse) =>
-        this.data.push({ name: elem.name, description: elem.url })
-      );
-      this.setState({
-        serverUrl: url,
-      });
+        if (!results) throw new Error('fetch failed');
+        this.data.splice(0, this.data.length);
+        results.map((elem: ResultResponse) =>
+          this.data.push({ name: elem.name, description: elem.url })
+        );
+        this.setState({
+          serverUrl: url,
+        });
+      }
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -39,6 +41,12 @@ class App extends Component {
 
   constructor(props: {}) {
     super(props);
+  }
+
+  componentDidUpdate(prevState: { serverUrl: string }) {
+    if (prevState.serverUrl !== this.state.serverUrl) {
+      console.log('Count updated:', this.state.serverUrl);
+    }
   }
 
   render() {

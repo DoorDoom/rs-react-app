@@ -1,17 +1,10 @@
-import type { ReactNode } from 'react';
+import type { ButtonHTMLAttributes } from 'react';
 
-type ButtonProps = {
-  children: ReactNode;
-  className?: string;
-};
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
 
-const Button = ({ children, className }: ButtonProps) => {
-  function handleClick() {
-    alert('You clicked me!');
-  }
-
+const Button = ({ children, className, type, onClick }: ButtonProps) => {
   return (
-    <button onClick={handleClick} className={className}>
+    <button onClick={onClick} className={`${className} button`} type={type}>
       {children}
     </button>
   );

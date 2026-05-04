@@ -1,16 +1,55 @@
+import { Component } from 'react';
 import './App.css';
 import { Footer } from './components/ui/footer';
 import { Header } from './components/ui/header';
 import { Main } from './components/ui/main';
+import type { CardData, ResultResponse } from './types/types';
 
-function App() {
-  return (
-    <>
-      <Header></Header>
-      <Main></Main>
-      <Footer></Footer>
-    </>
-  );
+class App extends Component {
+  state = {
+    serverUrl: '',
+  };
+  data: CardData[] = [];
+  searchLine = localStorage.getItem('search');
+
+  fetchData = async (search: string) => {
+    try {
+      const url = 'https://pokeapi.co/api/v2/pokemon/' + search;
+      const res = await fetch(url);
+      const json = await res.json();
+      const results = json.results || json.forms;
+
+      if (!results) throw new Error('fetch failed');
+      this.data.splice(0, this.data.length);
+      results.map((elem: ResultResponse) =>
+        this.data.push({ name: elem.name, description: elem.url })
+      );
+      this.setState({
+        serverUrl: url,
+      });
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  promise = new Promise(async (resolve) => {
+    const data = await this.fetchData(this.searchLine ?? '');
+    resolve(data);
+  });
+
+  constructor(props: {}) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <>
+        <Header fetchData={this.fetchData}></Header>
+        <Main cards={this.data}></Main>
+        <Footer></Footer>
+      </>
+    );
+  }
 }
 
 export default App;

@@ -1,21 +1,27 @@
-const CardsList = () => {
+import { Card } from '../card';
+import type { CardData } from '../../../types/types';
+
+type CardsListProps = {
+  cards: CardData[];
+};
+
+const CardsList = ({ cards }: CardsListProps) => {
   return (
-    <table>
+    <table className="card-list">
       <thead>
-        <tr>
+        <tr className="card-list__columns">
           <th>Name</th>
           <th>Description</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>Item 1</td>
-          <td>Description 1</td>
-        </tr>
-        <tr>
-          <td>Item 2</td>
-          <td>Description 2</td>
-        </tr>
+        {cards.map((item, ind) => (
+          <Card
+            key={ind}
+            name={item.name}
+            description={item.description}
+          ></Card>
+        ))}
       </tbody>
     </table>
   );

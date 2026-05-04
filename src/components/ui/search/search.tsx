@@ -1,18 +1,35 @@
+import type { FormEvent, ChangeEvent } from 'react';
 import { Button } from '../button';
 
-const Search = () => {
-  const value = localStorage.getItem('search');
+type SearchProps = {
+  fetchData: (search: string) => Promise<void>;
+};
+
+const Search = ({ fetchData }: SearchProps) => {
+  let value = localStorage.getItem('search');
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    localStorage.setItem('search', value ?? '');
+    fetchData(value ?? '');
+  };
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    value = e.target.value;
+  };
 
   return (
-    <div className="search">
+    <form onSubmit={handleSubmit} className="search">
       <input
         type="text"
         placeholder="Search..."
         className="input"
-        value={value || ''}
+        defaultValue={value || ''}
+        onChange={(e) => handleChange(e)}
       />
-      <Button>Search</Button>
-    </div>
+      <Button type="submit">Search</Button>
+    </form>
   );
 };
 

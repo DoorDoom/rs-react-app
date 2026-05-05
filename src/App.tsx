@@ -8,6 +8,7 @@ import type { CardData, ResultResponse } from './types/types';
 class App extends Component {
   state = {
     serverUrl: '',
+    isLoading: false,
   };
   data: CardData[] = [];
   searchLine = localStorage.getItem('search');
@@ -15,6 +16,9 @@ class App extends Component {
   fetchData = async (search: string) => {
     try {
       const url = 'https://pokeapi.co/api/v2/pokemon/' + search;
+      this.setState({
+        isLoading: true,
+      });
       if (url !== this.state.serverUrl) {
         const res = await fetch(url);
         const json = await res.json();
@@ -28,9 +32,15 @@ class App extends Component {
         this.setState({
           serverUrl: url,
         });
+        this.setState({
+          isLoading: false,
+        });
       }
     } catch (error) {
       console.error('Error fetching data:', error);
+      this.setState({
+        isLoading: false,
+      });
     }
   };
 
@@ -53,7 +63,7 @@ class App extends Component {
     return (
       <>
         <Header fetchData={this.fetchData}></Header>
-        <Main cards={this.data}></Main>
+        <Main cards={this.data} isLoading={this.state.isLoading}></Main>
         <Footer></Footer>
       </>
     );

@@ -33,7 +33,7 @@ class SearchContainer extends Component<Props, State> {
           }}
         >
           <Input
-            placeholder="Search movies by title"
+            placeholder="Search pokemon by title"
             value={this.state.value}
             onChange={(e) => this.setState({ value: e.target.value })}
           />

@@ -1,17 +1,17 @@
-import { Component } from 'react';
+import { Route, Routes } from 'react-router';
 import MainLayout from '../widgets/layouts/main-layout/MainLayout';
-import PokemonContainer from '@/widgets/components/pokemon-container/ui/pokemon-container';
+import { HomePage } from '@pages/home';
+import { AboutPage } from '@pages/about';
+import { NotFoundPage } from '@pages/not-found';
 
-class App extends Component {
-  render() {
-    return (
-      <div>
-        <MainLayout>
-          <PokemonContainer />
-        </MainLayout>
-      </div>
-    );
-  }
-}
+const App = () => (
+  <MainLayout>
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/about" element={<AboutPage />} />
+      <Route path="*" element={<NotFoundPage />} />
+    </Routes>
+  </MainLayout>
+);
 
 export default App;

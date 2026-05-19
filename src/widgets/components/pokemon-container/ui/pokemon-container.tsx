@@ -4,7 +4,7 @@ import ItemList from '@/features/item-list/ui/item-list';
 import { fetchPokemons } from '../model/pokemon-service';
 import useLocalStorage from '@/shared/hooks/UseLocalStorage';
 import Button from '@/shared/ui/Button';
-import { Link, Outlet, useParams, useSearchParams } from 'react-router';
+import { Link, Outlet, useSearchParams } from 'react-router';
 import type { PokemonCardData } from '@/shared/types/types';
 import PokemonCard from './pokemon-card';
 

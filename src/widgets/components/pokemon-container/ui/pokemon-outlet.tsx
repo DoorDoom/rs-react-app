@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link, useNavigate, useOutletContext, useParams } from 'react-router';
+import { Link, useNavigate, useParams } from 'react-router';
 import { findPokemon } from '../api/pokemon-api-service';
 import Loading from '@/shared/ui/Loading';
 import ItemListError from '@/features/item-list/ui/item-list-error';

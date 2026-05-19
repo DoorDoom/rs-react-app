@@ -14,6 +14,16 @@ export interface PokemonCardData {
   };
 }
 
+export interface PokemonCardExtendedData extends PokemonCardData {
+  name: string;
+  types: PokemonTypes[];
+  height: number;
+  order: number;
+  sprites: {
+    front_default: string;
+  };
+}
+
 export type ResultResponse = {
   name: string;
   url: string;

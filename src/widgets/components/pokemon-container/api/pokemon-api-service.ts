@@ -1,4 +1,7 @@
-import type { PokemonCardData } from '@shared/types/types';
+import type {
+  PokemonCardData,
+  PokemonCardExtendedData,
+} from '@shared/types/types';
 import type { PokemonResult } from './types';
 
 const BASE_URL = 'https://pokeapi.co/api/v2/pokemon';
@@ -31,7 +34,9 @@ export async function searchPokemons(
   return responses;
 }
 
-export async function findPokemon(query: string): Promise<PokemonCardData> {
+export async function findPokemon(
+  query: string
+): Promise<PokemonCardExtendedData> {
   const url = BASE_URL + '/' + query;
 
   const response = await fetch(url);
@@ -40,7 +45,7 @@ export async function findPokemon(query: string): Promise<PokemonCardData> {
     throw new Error(`HTTP error: ${response.status}`);
   }
 
-  const data: PokemonCardData = await response.json();
+  const data: PokemonCardExtendedData = await response.json();
 
   return data;
 }

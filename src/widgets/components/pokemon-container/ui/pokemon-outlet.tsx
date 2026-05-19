@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router';
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router';
 import { findPokemon } from '../api/pokemon-api-service';
 import Loading from '@/shared/ui/Loading';
 import ItemListError from '@/features/item-list/ui/item-list-error';
@@ -8,21 +8,24 @@ import type { PokemonCardExtendedData } from '@/shared/types/types';
 const PokemonContainer = () => {
   const navigate = useNavigate();
   let { details } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const panelRef = useRef<HTMLDivElement>(null);
   const [result, setResult] = useState<PokemonCardExtendedData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const page = searchParams.get('page');
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        navigate('/');
+        navigate(`/?page=${page || '1'}`);
       }
     };
 
     const handleClickOutside = (e: MouseEvent) => {
       if (panelRef.current && !panelRef.current.contains(e.target as Node)) {
-        navigate('/');
+        navigate(`/?page=${page || '1'}`);
       }
     };
 

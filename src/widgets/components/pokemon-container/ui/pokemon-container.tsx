@@ -68,7 +68,7 @@ const PokemonContainer = () => {
               error={error}
             >
               {results.map((pokemon: PokemonCardData) => (
-                <Link to={pokemon.name} key={pokemon.name}>
+                <Link to={`${pokemon.name}?page=${page}`} key={pokemon.name}>
                   <PokemonCard
                     name={pokemon.name}
                     type={pokemon.types.map((t) => t.type.name).join(', ')}

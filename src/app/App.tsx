@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router';
-import MainLayout from '../widgets/layouts/main-layout/MainLayout';
+import MainLayout from '../widgets/layouts/main-layout/ui/main-layout';
 import { HomePage } from '@pages/home';
 import { AboutPage } from '@pages/about';
 import { NotFoundPage } from '@pages/not-found';

@@ -12,7 +12,7 @@ class ItemListPagination extends Component<Props> {
     const { page, onNext, onPrev } = this.props;
 
     return (
-      <div className="flex justify-center gap-4 mt-6">
+      <div className="flex justify-center items-center gap-4 mt-6">
         <Button
           onClick={onPrev}
           className="text-black bg-gray-200 hover:bg-gray-300"

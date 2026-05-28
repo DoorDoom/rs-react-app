@@ -3,10 +3,11 @@ import { SearchContainer } from '@/features/search-container';
 import ItemList from '@/features/item-list/ui/item-list';
 import { fetchPokemons } from '../model/pokemon-service';
 import useLocalStorage from '@/shared/hooks/UseLocalStorage';
-import Button from '@/shared/ui/Button';
+import Button from '@shared/ui/Button';
 import { Link, Outlet, useSearchParams } from 'react-router';
-import type { PokemonCardData } from '@/shared/types/types';
+import type { PokemonCardData } from '@shared/types/types';
 import PokemonCard from './pokemon-card';
+import { Select } from '@/shared/ui/select';
 
 const PokemonContainerContext = createContext<string>('');
 
@@ -68,13 +69,17 @@ const PokemonContainer = () => {
               error={error}
             >
               {results.map((pokemon: PokemonCardData) => (
-                <Link to={`${pokemon.name}?page=${page}`} key={pokemon.name}>
-                  <PokemonCard
-                    name={pokemon.name}
-                    type={pokemon.types.map((t) => t.type.name).join(', ')}
-                    imgUrl={pokemon.sprites.front_default}
-                  />
-                </Link>
+                <div className="relative" key={pokemon.name}>
+                  <Select className="mt-4 absolute z-10">
+                    <Link to={`${pokemon.name}?page=${page}`}>
+                      <PokemonCard
+                        name={pokemon.name}
+                        type={pokemon.types.map((t) => t.type.name).join(', ')}
+                        imgUrl={pokemon.sprites.front_default}
+                      />
+                    </Link>
+                  </Select>
+                </div>
               ))}
             </ItemList>
           </div>
